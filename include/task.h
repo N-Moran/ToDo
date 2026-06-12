@@ -11,13 +11,13 @@ class Task {
         std::string description;
     public:
         // Constructor
-        Task(int id, int priority, const std::string& title, const std::string& description);
+        Task(int id, int priority, bool completed, const std::string& title, const std::string& description);
         // Getters
-        const int getID();
-        const int getPriority();
-        const std::string getTitle();
-        const std::string getDescription();
-        const bool isCompleted();
+        int getID() const;
+        int getPriority() const;
+        std::string getTitle() const;
+        std::string getDescription() const;
+        bool isCompleted() const;
         // Setters
         void setPriority(int newPriority);
         void setTitle(const std::string& newTitle);

@@ -2,29 +2,29 @@
 
 
 // Constructor
-Task::Task(int id, int priority, const std::string& title, const std::string& description) 
+Task::Task(int id, int priority, bool completed, const std::string& title, const std::string& description) 
     : id(id), priority(priority), title(title), description(description), completed(false)
 {
     // Initializer used so inside is blank
 }
 // Getters
-const int Task::getID()
+int Task::getID() const
 {
     return id;
 }
-const int Task::getPriority()
+int Task::getPriority() const
 {
     return priority;
 }
-const std::string Task::getTitle()
+std::string Task::getTitle() const
 {
     return title;
 }
-const std::string Task::getDescription()
+std::string Task::getDescription() const
 {
     return description;
 }
-const bool Task::isCompleted()
+bool Task::isCompleted() const
 {
     return completed;
 }
