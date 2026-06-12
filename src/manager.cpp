@@ -70,5 +70,16 @@ void Manager::loadFromFile()
 
         int index = getBucketIndex(priority);
         taskPriority[index].push_back(id);
+
+        if (id >= nextID) {
+            nextID = id + 1;
+        }
     }
+
+    inFile.close();
+}
+
+void Manager::CreateTask(int priority, const std::string& title, const std::string& description)
+{
+    Task newTask(nextID, priority, title, description);
 }

@@ -19,7 +19,7 @@ class Manager {
         Manager();
 
         // CRUD functionality
-        void CreateTask(const std::string& title, const std::string& description, int priority);
+        void CreateTask(int priority, const std::string& title, const std::string& description);
         Task readTask(int id) const;
         void updateTaskTitle(int id, const std::string& newTitle);
         void updateTaskPriority(int id, int newPriority);
