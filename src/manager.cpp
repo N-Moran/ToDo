@@ -81,5 +81,45 @@ void Manager::loadFromFile()
 
 void Manager::CreateTask(int priority, const std::string& title, const std::string& description)
 {
-    Task newTask(nextID, priority, title, description);
+    Task newTask(nextID, priority, false, title, description);
+
+    taskManager[nextID] = newTask;
+
+    int index = getBucketIndex(priority);
+    taskPriority[index].push_back(nextID);
+
+    nextID++;
+
+    saveToFile();
+}
+
+Task Manager::readTask(int id) const
+{
+    auto it = taskManager.find(id);
+
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with ID not found in system");
+    }
+
+    return it->second;
+}
+
+void Manager::updateTaskTitle(int id, const std::string& newTitle)
+{
+
+}
+
+void Manager::updateTaskPriority(int id, int newPriority)
+{
+
+}
+
+void Manager::updateTaskDescription(int id, const std::string& newDescription)
+{
+
+}
+
+void Manager::deleteTask(int id)
+{
+
 }
