@@ -23,6 +23,7 @@ class Manager {
         const Task& readTask(int id) const;
         void updateTaskTitle(int id, const std::string& newTitle);
         void updateTaskPriority(int id, int newPriority);
+        void updateCompletionStatus(int id);
         void updateTaskDescription(int id, const std::string& newDescription);
         void deleteTask(int id);
 

@@ -140,6 +140,18 @@ void Manager::updateTaskPriority(int id, int newPriority)
     }
 }
 
+void Manager::updateCompletionStatus(int id)
+{
+    auto it = taskManager.find(id);
+
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with that ID not found in system.");
+    }
+
+    it->second.markComplete();
+    saveToFile();
+}
+
 void Manager::updateTaskDescription(int id, const std::string& newDescription)
 {
     auto it = taskManager.find(id);
@@ -170,9 +182,70 @@ void Manager::deleteTask(int id)
 
 void Manager::displayAllByPriority() const
 {
+    std::cout << "\n====================\n";
+    std::cout << "      TO-DO LIST    \n";
+    std::cout << "====================\n";
+    
+    for (int i = 0; i < 3; ++i) {
 
+        if (i == 0) {
+            std::cout << "\n====================\n";
+            std::cout << "      High Priority    \n";
+            std::cout << "====================\n";
+        }
+        else if (i == 1) {
+            std::cout << "\n====================\n";
+            std::cout << "     Medium Priority    \n";
+            std::cout << "====================\n";
+        }
+        else {
+            std::cout << "\n====================\n";
+            std::cout << "      Low Priority    \n";
+            std::cout << "====================\n";
+        }
+
+        const auto& bucket = taskPriority[i];
+
+        if (bucket.empty()) {
+            std::cout << " (No tasks in this category)\n";
+            continue;
+        }
+
+        for (int id : bucket) {
+            auto it = taskManager.find(id);
+            if (it != taskManager.end()) {
+                const Task& task = it->second;
+
+                std::string status = task.isCompleted() ? "[X]" : "[ ]";
+                std::cout << "  " << status << " ID: " << task.getID()
+                          << " | " << task.getTitle() << "\n";
+                if (!task.getDescription().empty()) {
+                    std::cout << "      Desc: " << task.getDescription() << "\n";
+                }
+            }
+        }
+    }
 }
+
 void Manager::displayAllLinear() const 
 {
+    std::cout << "\n====================\n";
+    std::cout << "      TO-DO LIST    \n";
+    std::cout << "====================\n";
 
+    if (taskManager.empty()) {
+        std::cout << "No tasks found.\n";
+        return;
+    }
+
+    for (const auto& pair : taskManager) {
+        const Task& task = pair.second;
+
+        std::string status = task.isCompleted() ? "[X]" : "[ ]";
+        std::cout << "  " << status << " ID: " << task.getID()
+                  << " | " << task.getTitle() << "\n";
+        if (!task.getDescription().empty()) {
+            std::cout << "      Desc: " << task.getDescription() << "\n";
+        }
+    }
 }
