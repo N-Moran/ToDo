@@ -1,4 +1,5 @@
 #include "manager.h"
+#include <algorithm>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -93,12 +94,12 @@ void Manager::CreateTask(int priority, const std::string& title, const std::stri
     saveToFile();
 }
 
-Task Manager::readTask(int id) const
+const Task& Manager::readTask(int id) const
 {
     auto it = taskManager.find(id);
 
     if (it == taskManager.end()) {
-        throw std::out_of_range("Task with ID not found in system");
+        throw std::out_of_range("Task with that ID not found in system.");
     }
 
     return it->second;
@@ -106,20 +107,72 @@ Task Manager::readTask(int id) const
 
 void Manager::updateTaskTitle(int id, const std::string& newTitle)
 {
+    auto it = taskManager.find(id);
 
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with that ID not found in system.");
+    }
+
+    it->second.setTitle(newTitle);
+    saveToFile();
 }
 
 void Manager::updateTaskPriority(int id, int newPriority)
 {
+    auto it = taskManager.find(id);
 
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with that ID not found in system.");
+    }
+
+    int oldPriority = it->second.getPriority();
+
+    if (oldPriority != newPriority) {
+        int oldIdx = getBucketIndex(oldPriority);
+        auto& oldBucket = taskPriority[oldIdx];
+        oldBucket.erase(std::remove(oldBucket.begin(), oldBucket.end(), id), oldBucket.end());
+
+        int newIdx = getBucketIndex(newPriority);
+        taskPriority[newIdx].push_back(id);
+
+        it->second.setPriority(newPriority);
+        saveToFile();
+    }
 }
 
 void Manager::updateTaskDescription(int id, const std::string& newDescription)
 {
+    auto it = taskManager.find(id);
 
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with that ID not found in system.");
+    }
+
+    it->second.setDescription(newDescription);
+    saveToFile();
 }
 
 void Manager::deleteTask(int id)
+{
+    auto it = taskManager.find(id);
+
+    if (it == taskManager.end()) {
+        throw std::out_of_range("Task with that ID not found in system.");
+    }
+
+    int index = getBucketIndex(it->second.getPriority());
+    auto& bucket = taskPriority[index];
+    bucket.erase(std::remove(bucket.begin(), bucket.end(), id), bucket.end());
+
+    taskManager.erase(id);
+    saveToFile();
+}
+
+void Manager::displayAllByPriority() const
+{
+
+}
+void Manager::displayAllLinear() const 
 {
 
 }
