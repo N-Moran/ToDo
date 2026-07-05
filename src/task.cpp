@@ -3,7 +3,7 @@
 
 // Constructor
 Task::Task(int id, int priority, bool completed, const std::string& title, const std::string& description) 
-    : id(id), priority(priority), title(title), description(description), completed(false)
+    : id(id), priority(priority), title(title), description(description), completed(completed)
 {
     // Initializer used so inside is blank
 }
