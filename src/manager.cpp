@@ -67,7 +67,7 @@ void Manager::loadFromFile()
 
         Task loadedTask(id, priority, completed, title, description);
 
-        taskManager[id] = loadedTask;
+        taskManager.insert_or_assign(id, loadedTask);
 
         int index = getBucketIndex(priority);
         taskPriority[index].push_back(id);
@@ -84,7 +84,7 @@ void Manager::CreateTask(int priority, const std::string& title, const std::stri
 {
     Task newTask(nextID, priority, false, title, description);
 
-    taskManager[nextID] = newTask;
+    taskManager.insert_or_assign(nextID, newTask);
 
     int index = getBucketIndex(priority);
     taskPriority[index].push_back(nextID);
