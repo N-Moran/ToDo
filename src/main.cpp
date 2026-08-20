@@ -70,7 +70,6 @@ int main() {
         std::cout << "3. Update Task\n";
         std::cout << "4. Delete Task\n";
         std::cout << "5. Exit\n";
-        std::cout << "Enter your choice: ";
 
         int choice = getValidInt("Enter your choice: ", 1, 5);
 
