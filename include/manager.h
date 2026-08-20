@@ -18,6 +18,8 @@ class Manager {
     public:
         Manager();
 
+        bool isEmpty() const;
+
         // CRUD functionality
         void CreateTask(int priority, const std::string& title, const std::string& description);
         const Task& readTask(int id) const;

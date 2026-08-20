@@ -38,6 +38,10 @@ void Manager::saveToFile() const
     outFile.close();
 }
 
+bool Manager::isEmpty() const {
+    return taskManager.empty();
+}
+
 void Manager::loadFromFile()
 {
     std::ifstream inFile("tasks.txt");

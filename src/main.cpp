@@ -144,6 +144,10 @@ int main() {
             {
                 taskManager.displayAllLinear();
 
+                if (taskManager.isEmpty()) {
+                    break;
+                }
+
                 std::cout << "\nWhich task would you like to delete?(ID).\n";
                 std::cin >> upID;
 
